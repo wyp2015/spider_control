@@ -14,16 +14,21 @@ expect {
 "*#*" {}
 }
 
-set lip [lindex $argv 3]
-set luser [lindex $argv 4]
+#set lip [lindex $argv 3]
+#set luser [lindex $argv 4]
+#set lpassword [lindex $argv 5]
+
+set upload_path [lindex $argv 3]
+set download_path [lindex $argv 4]
 set lpassword [lindex $argv 5]
+set k [lindex $argv 6]
 
-set client_path [lindex $argv 6]
-set server_path [lindex $argv 7]
+if { ${k} == "2" } {
+	send "mkdir ${download_path}\r"
+}
+#send "mkdir ${server_path}\r"
 
-send "mkdir ${server_path}\r"
-
-send "scp -r ${luser}@${lip}:${client_path} ${server_path}\r"
+send "scp -r ${upload_path} ${download_path}\r"
 expect {
 	"*yes/no*" {send "yes\r"; exp_continue}
 	"*assword*" { send ${lpassword}\r }
